@@ -17,9 +17,14 @@ void draw() {
   float tilesX = map(mouseX, 0, width, 10, 100);
   float tilesY = ratio * tilesX;
   float tileSize = width / tilesX;
+  // loading the pixel array of the image
+  img.loadPixels();
   for (int y = 0; y < img.height; y += tileSize) {
     for (int x = 0; x < img.width; x += tileSize) {
-      color c = img.get(x, y);
+      // calculates the index in the pixel array
+      int index = x+y*img.width;
+      // retrieves the pixel at that index
+      color c = img.pixels[index];
       float b = map(brightness(c), 0, 255, 1, 0);
       pushMatrix();
       translate(x, y);
@@ -27,4 +32,6 @@ void draw() {
       popMatrix();
     }
   }
+  // updating the pixel array (not needed here b/c the image doesn't change)
+  img.updatePixels();
 }
